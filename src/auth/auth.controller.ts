@@ -1,28 +1,29 @@
-import { Controller, Post, Body, Session, Request, Response, UseInterceptors } from '@nestjs/common';
-import { UserDto } from '../users/dtos/user.dto';
+import { Controller, Post, Body, Request, Response } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { SigninUserDto } from './dtos/signin-user.dto';
 import { Public } from 'src/decorators/public.decorator';
 
 @Controller('auth')
-@Serialize(UserDto)
 export class AuthController {
     constructor(private authService: AuthService) {};
 
     @Public()
     @Post('/signup')
-    async create(@Body() body: CreateUserDto) {
-        const user = await this.authService.signup(body.email, body.password, body.username);
-        return user;
+    async create(@Body() body: CreateUserDto, @Response() res: any) {
+        const { user, accessToken } = await this.authService.signup(body.email, body.password, body.username);
+        res.setHeader('Authorization', `Bearer ${accessToken}`);
+
+        return res.status(200).json(user);
     };
 
     @Public()
     @Post('/signin')
-    async signin(@Body() body: SigninUserDto) {
-        const user = await this.authService.signin(body.email, body.password);
-        return user;
+    async signin(@Body() body: SigninUserDto, @Response() res: any) {
+        const { user, accessToken } = await this.authService.signin(body.email, body.password);
+        res.setHeader('Authorization', `Bearer ${accessToken}`);
+
+        return res.status(200).json(user);
     };
 
     @Post('/signout')

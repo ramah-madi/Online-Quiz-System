@@ -32,12 +32,16 @@ export class AuthService {
 
         // Create a new user and save it
         const user = await this.usersService.create(email, result, username);
+        user.created_by = user.id;
+
+        // Exclude password field from user object
+        const { password: _, ...safeUser } = user;
 
         const payload = { sub: user.id, role: user.role };
 
-        await this.jwtService.signAsync(payload);
+        const accessToken = await this.jwtService.signAsync(payload);
 
-        return user;
+        return { user: safeUser, accessToken };
     };
 
     async signin(email: string, password: string) {
@@ -57,7 +61,10 @@ export class AuthService {
         const payload = { sub: user.id, role: user.role };
         const accessToken = await this.jwtService.signAsync(payload);
 
-        return accessToken;
+        // Exclude password field from user object
+        const { password: _, ...safeUser } = user;
+
+        return { user: safeUser, accessToken };
     };
 
 }

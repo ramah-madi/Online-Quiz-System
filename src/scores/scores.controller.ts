@@ -1,10 +1,10 @@
 import { Controller, Post, Get, Delete, Param, Body, UseGuards, Patch } from '@nestjs/common';
 import { ScoresService } from './scores.service';
 import { CreateScoreDto } from './dtos/create-score.dto';
-import { CurrentUser } from 'src/users/decorators/current-user.decorator';
+import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { Users } from 'src/users/users.entity';
 import { UpdateScoreDto } from './dtos/update-score.dto';
-import { Roles } from 'src/auth/decorators/role.decorator';
+import { Roles } from 'src/decorators/role.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { RolesGuard } from 'src/guards/roles.guard';
 
@@ -12,7 +12,7 @@ import { RolesGuard } from 'src/guards/roles.guard';
 @Roles(Role.Admin)
 @UseGuards(RolesGuard)
 export class ScoresController {
-  constructor(private readonly scoresService: ScoresService) {}
+  constructor(private readonly scoresService: ScoresService) { }
 
   @Post()
   recordScore(@Body() body: CreateScoreDto, @CurrentUser() currentUser: Users) {

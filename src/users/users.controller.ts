@@ -1,12 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Patch, NotFoundException, UseGuards} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, NotFoundException, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { UserDto } from 'src/users/dtos/user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { Role } from 'src/auth/enums/role.enum';
-import { Roles } from 'src/auth/decorators/role.decorator';
+import { Roles } from 'src/decorators/role.decorator';
 import { RolesGuard } from 'src/guards/roles.guard';
-import { CurrentUser } from './decorators/current-user.decorator';
+import { CurrentUser } from '../decorators/current-user.decorator';
 import { Users } from './users.entity';
 
 @Controller('users')

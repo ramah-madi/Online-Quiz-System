@@ -1,21 +1,21 @@
 import {
-    Controller,
-    Post,
-    Get,
-    Delete,
-    Param,
-    Body,
-    UseGuards,
-    Patch,
+  Controller,
+  Post,
+  Get,
+  Delete,
+  Param,
+  Body,
+  UseGuards,
+  Patch,
 } from '@nestjs/common';
 import { OptionsService } from './options.service';
 import { CreateOptionDto } from './dtos/create-option.dto';
-import { CurrentUser } from 'src/users/decorators/current-user.decorator';
+import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { Users } from 'src/users/users.entity';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { OptionDto } from './dtos/option.dto';
 import { UpdateOptionDto } from './dtos/update-option.dto';
-import { Roles } from 'src/auth/decorators/role.decorator';
+import { Roles } from 'src/decorators/role.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { RolesGuard } from 'src/guards/roles.guard';
 
@@ -24,11 +24,11 @@ import { RolesGuard } from 'src/guards/roles.guard';
 @Roles(Role.Admin)
 @UseGuards(RolesGuard)
 export class OptionsController {
-  constructor(private optionsService: OptionsService) {}
+  constructor(private optionsService: OptionsService) { }
 
   @Post()
   createOption(@Body() body: CreateOptionDto, @CurrentUser() user: Users) {
-        return this.optionsService.create(body, user);
+    return this.optionsService.create(body, user);
   }
 
   @Get(':id')

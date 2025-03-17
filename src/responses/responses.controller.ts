@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Body, Param, Delete, UseGuards, Patch } from '@nestjs/common';
 import { ResponsesService } from './responses.service';
 import { Users } from 'src/users/users.entity';
-import { CurrentUser } from 'src/users/decorators/current-user.decorator';
+import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { SubmitResponseDto } from './dtos/submit-response.dto';
 import { UpdateResponseDto } from './dtos/update-response.dto';
-import { Roles } from 'src/auth/decorators/role.decorator';
+import { Roles } from 'src/decorators/role.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { RolesGuard } from 'src/guards/roles.guard';
 
@@ -12,7 +12,7 @@ import { RolesGuard } from 'src/guards/roles.guard';
 @Roles(Role.Admin)
 @UseGuards(RolesGuard)
 export class ResponsesController {
-  constructor(private readonly responsesService: ResponsesService) {}
+  constructor(private readonly responsesService: ResponsesService) { }
 
   // POST /responses - Submit a response (student only)
   @Post()

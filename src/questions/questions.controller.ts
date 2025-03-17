@@ -2,11 +2,11 @@ import { Controller, Post, Get, Param, Body, Patch, Delete, UseGuards } from '@n
 import { QuestionsService } from './questions.service';
 import { CreateQuestionDto } from './dtos/create-question.dto';
 import { UpdateQuestionDto } from './dtos/update-question.dto';
-import { CurrentUser } from '../users/decorators/current-user.decorator';
+import { CurrentUser } from '../decorators/current-user.decorator';
 import { Users } from '../users/users.entity';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { QuestionDto } from './dtos/question.dto';
-import { Roles } from 'src/auth/decorators/role.decorator';
+import { Roles } from 'src/decorators/role.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { RolesGuard } from 'src/guards/roles.guard';
 
@@ -15,7 +15,7 @@ import { RolesGuard } from 'src/guards/roles.guard';
 @Roles(Role.Admin)
 @UseGuards(RolesGuard)
 export class QuestionsController {
-    constructor(private questionsService: QuestionsService) {}
+    constructor(private questionsService: QuestionsService) { }
 
     @Post()
     createQuestion(@Body() body: CreateQuestionDto, @CurrentUser() user: Users) {
@@ -24,8 +24,8 @@ export class QuestionsController {
 
     @Get(':quiz_id/questions')
     @Roles(Role.Student, Role.Admin)
-    async getQuestionsByQuizId(@Param('quiz_id') quizId: string){
-      return this.questionsService.findQuestionsByQuizId(quizId);
+    async getQuestionsByQuizId(@Param('quiz_id') quizId: string) {
+        return this.questionsService.findQuestionsByQuizId(quizId);
     }
 
     @Get('/:id')
@@ -47,5 +47,5 @@ export class QuestionsController {
     deleteQuestion(@Param('id') id: string) {
         return this.questionsService.remove(id);
     }
-  }
+}
 

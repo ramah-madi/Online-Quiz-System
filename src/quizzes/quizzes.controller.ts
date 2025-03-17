@@ -2,11 +2,11 @@ import { Controller, Get, Post, Patch, Delete, Body, Param, UseGuards } from '@n
 import { QuizzesService } from './quizzes.service';
 import { CreateQuizDto } from './dtos/create-quiz.dto';
 import { UpdateQuizDto } from './dtos/update-quiz.dto';
-import { CurrentUser } from 'src/users/decorators/current-user.decorator';
+import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { Users } from 'src/users/users.entity';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { QuizDto } from './dtos/quiz.dto';
-import { Roles } from 'src/auth/decorators/role.decorator';
+import { Roles } from 'src/decorators/role.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { RolesGuard } from 'src/guards/roles.guard';
 
@@ -15,7 +15,7 @@ import { RolesGuard } from 'src/guards/roles.guard';
 @Roles(Role.Admin)
 @UseGuards(RolesGuard)
 export class QuizzesController {
-  constructor(private readonly quizzesService: QuizzesService) {}
+  constructor(private readonly quizzesService: QuizzesService) { }
 
   @Post()
   createQuiz(@CurrentUser() user: Users, @Body() body: CreateQuizDto) {

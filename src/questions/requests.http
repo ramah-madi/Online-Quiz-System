@@ -1,0 +1,9 @@
+### Create a question
+POST http://localhost:3000/questions
+Content-Type: application/json
+
+{
+    "question_text": "What is the capital of Jordan?",
+    "question_type": "multiple_choice",
+    "quiz_id": "84a1e37a-15da-4fa6-9755-a2a623bbe0f7"
+}

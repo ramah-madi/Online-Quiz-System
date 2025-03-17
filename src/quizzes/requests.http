@@ -1,0 +1,14 @@
+### Create a new quiz
+POST http://localhost:3000/quizzes
+Content-Type: application/json
+
+{
+    "title": "Quiz 1",
+    "description": "This is a quiz"
+
+}
+
+
+### Get all the quizzes with created user id
+GET http://localhost:3000/quizzes
+

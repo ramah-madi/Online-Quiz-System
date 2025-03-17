@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Param, Body, Patch, Delete } from '@nestjs/common';
+import { Controller, Post, Get, Param, Body, Patch, Delete, UseGuards } from '@nestjs/common';
 import { QuestionsService } from './questions.service';
 import { CreateQuestionDto } from './dtos/create-question.dto';
 import { UpdateQuestionDto } from './dtos/update-question.dto';
@@ -9,7 +9,6 @@ import { QuestionDto } from './dtos/question.dto';
 import { Roles } from 'src/auth/decorators/role.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { RolesGuard } from 'src/guards/roles.guard';
-import { UseGuards } from '@nestjs/common';
 
 @Controller('questions')
 @Serialize(QuestionDto)

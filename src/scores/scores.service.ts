@@ -1,28 +1,37 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Scores } from './scores.entity';
-import { Users } from '../users/users.entity';
-import { Quizzes } from '../quizzes/quizzes.entity';
+import { QuizzesService } from 'src/quizzes/quizzes.service';
+import { UsersService } from 'src/users/users.service';
 
 
 @Injectable()
 export class ScoresService {
     constructor(
         @InjectRepository(Scores) private scoresRepo: Repository<Scores>,
-        // @InjectRepository(Users) private usersRepo: Repository<Users>,
-        // @InjectRepository(Quizzes) private quizzesRepo: Repository<Quizzes>,
+        private usersService: UsersService,
+        private quizzesService: QuizzesService,
     ) {}
 
     async create(quiz_id: string, score: number, userId: string, currentuserId: string) {
+        const quiz = await this.quizzesService.findOne(quiz_id);
+        const user = await this.usersService.findOne(userId);
+        if (!quiz) {
+            throw new NotFoundException('Quiz not found');
+        }
+
+        if (!user) {
+            throw new NotFoundException('User not found');
+        }
         const newScore = this.scoresRepo.create({
             quiz_id,
             score,
             user_id: userId,
             created_by: currentuserId
         });
-
         return this.scoresRepo.save(newScore);
+
     }
 
     async findAll(userId: string) {

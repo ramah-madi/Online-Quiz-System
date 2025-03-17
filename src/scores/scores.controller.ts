@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Put, Delete, Param, Body, UseGuards, Patch } from '@nestjs/common';
+import { Controller, Post, Get, Delete, Param, Body, UseGuards, Patch } from '@nestjs/common';
 import { ScoresService } from './scores.service';
 import { CreateScoreDto } from './dtos/create-score.dto';
 import { CurrentUser } from 'src/users/decorators/current-user.decorator';

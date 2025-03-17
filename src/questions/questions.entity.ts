@@ -17,7 +17,7 @@ export class Questions {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
+    @Column({ type: 'text' })
     question_text: string;
 
     @Column({ type: 'enum', enum: ['multiple_choice', 'true_false'], default: 'multiple_choice' })
